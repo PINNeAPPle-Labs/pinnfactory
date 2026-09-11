@@ -11,19 +11,25 @@ It provides:
 
 ## Installation
 
-Clone the repository and install the requirements:
+```bash
+pip install pinnfactory
+```
+
+Or from source:
 
 ```bash
-git clone https://github.com/barrosyan/pinnfactory.git
+git clone https://github.com/PINNeAPPle-Labs/pinnfactory.git
 cd pinnfactory
-pip install -r requirements.txt
+pip install -e ".[examples]"
 ```
+
+PyPI: https://pypi.org/project/pinnfactory/
 
 ### Requirements
 - torch
-- numpy
-- matplotlib
 - sympy
+- matplotlib (only for `examples/`)
+- numpy (only for `examples/`)
 
 ---
 
@@ -31,7 +37,7 @@ pip install -r requirements.txt
 
 ### 1. Define your neural network
 ```python
-from pinn_generator import NeuralNetwork, PINN
+from pinnfactory import NeuralNetwork, PINN
 
 # Example: 1 input, 1 output, 3 hidden layers with 20 neurons each
 net = NeuralNetwork(num_inputs=1, num_outputs=1, num_layers=3, num_neurons=20)
@@ -40,7 +46,7 @@ pinn = PINN(net)
 
 ### 2. Define PDEs and conditions symbolically
 ```python
-from pinn_generator import PINNFactory
+from pinnfactory import PINNFactory
 
 # PDE: u_xx + u = 0  (example)
 pde_residuals = ["Derivative(u(x), (x,2)) + u(x)"]
