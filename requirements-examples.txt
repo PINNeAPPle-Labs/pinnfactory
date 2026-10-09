@@ -1,0 +1,4 @@
+# Extra packages for running examples/ (the same as the "examples" extra in pyproject.toml).
+# pip install -r requirements.txt -r requirements-examples.txt
+matplotlib>=3.5
+numpy>=1.24

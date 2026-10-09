@@ -31,6 +31,13 @@ PyPI: https://pypi.org/project/pinnfactory/
 - matplotlib (only for `examples/`)
 - numpy (only for `examples/`)
 
+Without installing the package, the same lists are in `requirements.txt` (library) and `requirements-examples.txt`
+(examples):
+
+```bash
+pip install -r requirements.txt -r requirements-examples.txt
+```
+
 ---
 
 ## Quick Start

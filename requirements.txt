@@ -1,0 +1,4 @@
+# Runtime dependencies of pinnfactory (the same as [project.dependencies] in pyproject.toml).
+# pip install -r requirements.txt
+torch>=2.0
+sympy>=1.12
