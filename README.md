@@ -143,4 +143,27 @@ this roadmap item with a small, self-contained addition.
 
 ## License
 Apache License 2.0.  
-You may use, modify, and distribute this project under the terms of the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).  
+You may use, modify, and distribute this project under the terms of the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+## Relation to `pinneapple_physics.symbolic_pde`
+
+**Decision: this stays a small independent package, not a wrapper.**
+
+The overlap is real and worth stating plainly: `pinneapple_physics.symbolic_pde` in the PINNeAPPle library converts SymPy PDE residuals into callable PyTorch autograd functions and provides hard and soft boundary conditions — the same job `pinn_generator.py` does in 129 lines.
+
+The reasons to keep them separate:
+
+- **Installation weight.** This package depends on `torch` and `sympy` and nothing else. The library is a git dependency of several hundred megabytes; turning this into a wrapper would mean that installing a 129-line helper pulls the whole toolkit.
+- **A published API.** Version 0.1.0 is on PyPI. A wrapper that re-implements the same surface would either duplicate the code it was meant to remove, or break callers who use `PINNFactory` today.
+- **An independent check.** Two implementations of the same translation, one of them small enough to read in one sitting, are easier to test against each other than one implementation with no second opinion.
+
+The cost of this decision is duplication, and it is a real cost: a fix in one will not reach the other. If that ever becomes the reason to merge them, the merge should be into the library — not into a wrapper that hides the dependency.
+
+## Tests
+
+```bash
+pip install -r requirements.txt pytest
+pytest tests -q
+```
+
+Five tests, all of them about the generator rather than the examples: that a factory builds a loss from real SymPy strings and reports its components, that the loss is differentiable with respect to the network, that the data term is the mean squared error checked against a hand computation, that an inverse parameter is registered and receives a gradient, and that a loss weight scales only its own term.
